@@ -6,7 +6,7 @@
 /*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 15:40:32 by maskedduck        #+#    #+#             */
-/*   Updated: 2022/04/19 13:41:31 by user42           ###   ########.fr       */
+/*   Updated: 2022/04/19 14:10:09 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,27 +79,14 @@ int	ft_end(t_mast *ee)
 	if (ee->img.img)
 		mlx_destroy_image(ee->mlx, ee->img.img);
 	if (ee->mlx)
+	{
 		mlx_destroy_display(ee->mlx);
+		free(ee->mlx);
+	}
 	if (ee->check != -1024)
 		exit(2);
 	else
 		exit(0);
-}
-
-int	ft_strend_is(char *str, char *end)
-{
-	int	i;
-	int	j;
-
-	i = ft_strlen(str) - ft_strlen(end);
-	j = 0;
-	while (str[i + j])
-	{
-		if (str[i + j] != end[j])
-			return (0);
-		j++;
-	}
-	return (1);
 }
 
 void	init(t_mast *ee, char *file)
@@ -115,8 +102,15 @@ void	init(t_mast *ee, char *file)
 		ft_end(ee);
 	ee->win = mlx_new_window(ee->mlx, RESX, RESY, "cub3D");
 	ee->img.img = mlx_new_image(ee->mlx, RESX, RESY);
-	ee->img.addr = mlx_get_data_addr(ee->img.img,
+	ee->img.addr = NULL;
+	if (ee->img.img)
+		ee->img.addr = mlx_get_data_addr(ee->img.img,
 			&ee->img.bits_per_pixel, &ee->img.line_length, &ee->img.endian);
+	if (!ee->win || !ee->img.img || !ee->img.addr)
+	{
+		printf("Error : an mlx function failed\n");
+		exit(1000);
+	}
 }
 
 int	main(int ac, char **av)

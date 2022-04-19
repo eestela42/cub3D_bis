@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eestela <eestela@student.42.fr>            +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 15:40:32 by maskedduck        #+#    #+#             */
-/*   Updated: 2022/04/16 13:56:28 by eestela          ###   ########.fr       */
+/*   Updated: 2022/04/19 14:09:34 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ int	ft_end(t_mast *ee)
 {
 	int	i;
 
-	i = 0;
 	if (!ee)
 	{
 		printf("ARGUMENTS ERROR\n");
@@ -68,39 +67,50 @@ int	ft_end(t_mast *ee)
 	}
 	if (ee->check != -1024)
 		printf("ERROR %s", ft_error_message1(-ee->check));
+	i = 0;
 	if (ee->map)
 		while (ee->map[i])
 			free(ee->map[i++]);
 	if (ee->map)
-		free(ee->map);
+		free(ee->map);;
 	destroy_sprites(ee);
 	if (ee->win)
 		mlx_destroy_window(ee->mlx, ee->win);
 	if (ee->img.img)
 		mlx_destroy_image(ee->mlx, ee->img.img);
 	if (ee->mlx)
+	{
 		mlx_destroy_display(ee->mlx);
-	free(ee->mlx);
-	i = 0;
-	exit(2);
+		free(ee->mlx);
+	}
+	if (ee->check != -1024)
+		exit(2);
+	else
+		exit(0);
 }
 
-int	ft_strend_is(char *str, char *end)
+void	init(t_mast *ee, char *file)
 {
-	int	i;
-	int	j;
-
-	i = ft_strlen(str) - ft_strlen(end);
-	j = 0;
-	if (i < 0)
-		return (0);
-	while (str[i + j])
+	if (!(ee->mlx = mlx_init()))
 	{
-		if (str[i + j] != end[j])
-			return (0);
-		j++;
+		printf("Error : mlx can't be init\n");
+		exit(1000);
 	}
-	return (1);
+	ee->map = NULL;
+	ee->check = parsing(ee, file);
+	if (ee->check != -1024)
+		ft_end(ee);
+	ee->win = mlx_new_window(ee->mlx, RESX, RESY, "cub3D");
+	ee->img.img = mlx_new_image(ee->mlx, RESX, RESY);
+	ee->img.addr = NULL;
+	if (ee->img.img)
+		ee->img.addr = mlx_get_data_addr(ee->img.img,
+			&ee->img.bits_per_pixel, &ee->img.line_length, &ee->img.endian);
+	if (!ee->win || !ee->img.img || !ee->img.addr)
+	{
+		printf("Error : an mlx function failed\n");
+		exit(1000);
+	}
 }
 
 int	main(int ac, char **av)
@@ -109,15 +119,7 @@ int	main(int ac, char **av)
 
 	if (ac != 2 || !ft_strend_is(av[1], ".cub"))
 		ft_end(NULL);
-	ee.mlx = mlx_init();
-	ee.map = NULL;
-	ee.check = parsing(&ee, av[1]);
-	if (ee.check != -1024)
-		ft_end(&ee);
-	ee.win = mlx_new_window(ee.mlx, RESX, RESY, "cub3D");
-	ee.img.img = mlx_new_image(ee.mlx, RESX, RESY);
-	ee.img.addr = mlx_get_data_addr(ee.img.img,
-			&ee.img.bits_per_pixel, &ee.img.line_length, &ee.img.endian);
+	init(&ee, av[1]);
 	mlx_hook(ee.win, ClientMessage, NoEventMask, ft_end, &ee);
 	mlx_hook (ee.win, 2, 1L << 0, key_pressed, &ee);
 	mlx_loop_hook(ee.mlx, key_action, &ee);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   key_press.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eestela <eestela@student.42.fr>            +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 11:32:14 by eestela           #+#    #+#             */
-/*   Updated: 2022/04/12 11:42:31 by eestela          ###   ########.fr       */
+/*   Updated: 2022/04/19 13:49:42 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,20 @@ int	key_pressed(int key, t_mast *ee)
 	if (key == LEFT_A_Q)
 		ee->mv_left = 1;
 	return (0);
+}
+
+int	ft_strend_is(char *str, char *end)
+{
+	int	i;
+	int	j;
+
+	i = ft_strlen(str) - ft_strlen(end);
+	j = 0;
+	while (str[i + j])
+	{
+		if (str[i + j] != end[j])
+			return (0);
+		j++;
+	}
+	return (1);
 }

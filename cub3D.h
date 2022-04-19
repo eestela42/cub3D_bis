@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3D.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgeny <rgeny@student.42.fr>                +#+  +:+       +#+        */
+/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/16 13:51:27 by rgeny             #+#    #+#             */
-/*   Updated: 2022/04/16 14:07:18 by rgeny            ###   ########.fr       */
+/*   Updated: 2022/04/19 13:50:09 by user42           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,7 @@ int		fct_tab_ceiling(t_mast *ee, char *line, int i);
 int		key_pressed(int key, t_mast *ee);
 int		key_release(int key, t_mast *ee);
 int		key_action(t_mast *ee);
+int		ft_strend_is(char *str, char *end);
 
 /* POINT */
 t_point	add(t_point a, t_point b);

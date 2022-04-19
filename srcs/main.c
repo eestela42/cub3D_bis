@@ -6,7 +6,7 @@
 /*   By: eestela <eestela@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 15:40:32 by maskedduck        #+#    #+#             */
-/*   Updated: 2022/04/19 16:02:26 by eestela          ###   ########.fr       */
+/*   Updated: 2022/04/19 16:25:20 by eestela          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,10 @@ char	*ft_error_message2(int check)
 		return ("Missing sprite(s) in the file 'map'.cub\n");
 	if (check == 63)
 		return ("Invalid map, cut by at least one empty line\n");
+	if ( check < 0)
+		return ("Missing map\n");
+	if (check == 131)
+		return ("Missing rgb value\n");
 	return ("\n");
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rgeny <rgeny@student.42.fr>                +#+  +:+       +#+        */
+/*   By: eestela <eestela@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 15:40:36 by maskedduck        #+#    #+#             */
-/*   Updated: 2022/04/16 13:50:22 by rgeny            ###   ########.fr       */
+/*   Updated: 2022/04/19 16:22:31 by eestela          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,8 @@ int	get_info(t_mast *ee, char *line)
 	int	i;
 	int	(*fct_tab[256])(t_mast *ee, char *line, int i);
 
+	ee->floor = -1;
+	ee->ceil = -1;
 	line = ft_strjoin_free(line, "\n");
 	init_mast(ee);
 	init_fct_tab(fct_tab);

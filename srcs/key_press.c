@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   key_press.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: eestela <eestela@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/12 11:32:14 by eestela           #+#    #+#             */
-/*   Updated: 2022/04/19 13:49:42 by user42           ###   ########.fr       */
+/*   Updated: 2022/04/19 16:01:03 by eestela          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,4 +64,17 @@ int	ft_strend_is(char *str, char *end)
 		j++;
 	}
 	return (1);
+}
+
+void	destroy_mlx(t_mast *ee)
+{
+	if (ee->win)
+		mlx_destroy_window(ee->mlx, ee->win);
+	if (ee->img.img)
+		mlx_destroy_image(ee->mlx, ee->img.img);
+	if (ee->mlx)
+	{
+		mlx_destroy_display(ee->mlx);
+		free(ee->mlx);
+	}
 }

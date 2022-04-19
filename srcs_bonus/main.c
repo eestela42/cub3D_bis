@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: user42 <user42@student.42.fr>              +#+  +:+       +#+        */
+/*   By: eestela <eestela@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/28 15:40:32 by maskedduck        #+#    #+#             */
-/*   Updated: 2022/04/19 14:09:34 by user42           ###   ########.fr       */
+/*   Updated: 2022/04/19 16:02:18 by eestela          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,17 +72,9 @@ int	ft_end(t_mast *ee)
 		while (ee->map[i])
 			free(ee->map[i++]);
 	if (ee->map)
-		free(ee->map);;
+		free(ee->map);
 	destroy_sprites(ee);
-	if (ee->win)
-		mlx_destroy_window(ee->mlx, ee->win);
-	if (ee->img.img)
-		mlx_destroy_image(ee->mlx, ee->img.img);
-	if (ee->mlx)
-	{
-		mlx_destroy_display(ee->mlx);
-		free(ee->mlx);
-	}
+	destroy_mlx(ee);
 	if (ee->check != -1024)
 		exit(2);
 	else
@@ -91,7 +83,8 @@ int	ft_end(t_mast *ee)
 
 void	init(t_mast *ee, char *file)
 {
-	if (!(ee->mlx = mlx_init()))
+	ee->mlx = mlx_init();
+	if (!ee->mlx)
 	{
 		printf("Error : mlx can't be init\n");
 		exit(1000);
@@ -105,7 +98,7 @@ void	init(t_mast *ee, char *file)
 	ee->img.addr = NULL;
 	if (ee->img.img)
 		ee->img.addr = mlx_get_data_addr(ee->img.img,
-			&ee->img.bits_per_pixel, &ee->img.line_length, &ee->img.endian);
+				&ee->img.bits_per_pixel, &ee->img.line_length, &ee->img.endian);
 	if (!ee->win || !ee->img.img || !ee->img.addr)
 	{
 		printf("Error : an mlx function failed\n");
